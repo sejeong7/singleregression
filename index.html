@@ -1,0 +1,85 @@
+const data = [{
+    "name": "Burj Khalifa",
+    "height": "350"
+  },
+  {
+    "name": "Shanghai Tower",
+    "height": "263.34"
+  },
+  {
+    "name": "Abraj Al-Bait Clock Tower",
+    "height": "254.04"
+  },
+  {
+    "name": "Ping An Finance Centre",
+    "height": "253.20"
+  },
+  {
+    "name": "Lotte World Tower",
+    "height": "230.16"
+  },
+  {
+    "name": "Burj Khalifa 2",
+    "height": "350"
+  },
+  {
+    "name": "Shanghai Tower 2",
+    "height": "263.34"
+  },
+  {
+    "name": "Abraj Al-Bait Clock Tower 2",
+    "height": "254.04"
+  },
+  {
+    "name": "Ping An Finance Centre 2",
+    "height": "253.20"
+  }
+]
+
+data.forEach((d) => {
+  d.height = Number(d.height)
+})
+
+const heightExtent = d3.extent(data, d => d.height)
+
+const bars = data.map(d => d.name)
+
+const containerWidth = 400
+const containerHeight = 800
+
+const y = d3.scaleLinear()
+  .domain([0, heightExtent[1]])
+  .range([0, containerHeight])
+
+const x = d3.scaleBand()
+  .domain(bars)
+  .range([0, containerWidth])
+  .paddingInner(0.02)
+  .paddingOuter(0)
+
+const colourScale = d3.scaleOrdinal(d3.schemeBlues[data.length])
+
+const svg = d3.select("#chart-area").append("svg")
+  .attr("width", containerWidth)
+  .attr("height", containerHeight)
+
+const buildings = svg.selectAll('rect').data(data)
+
+buildings.enter().append('rect')
+  .attr('x', (d, i) => x(d.name))
+  .attr('y', (d, i) => {
+    return containerHeight - y(d.height)
+  })
+  .attr('width', x.bandwidth())
+  .attr('height', (d, i) => y(d.height))
+  .attr('fill', (d, i) => colourScale(d.name))
+
+const labels = svg.selectAll('text').data(data)
+
+labels.enter().append('text')
+  .attr('text-anchor', 'end')
+  .attr('x', (d, i) => (x(d.name) + (x.bandwidth() / 2)))
+  .attr('y', (d, i) => containerHeight - 10)
+  .attr('writing-mode', 'tb')
+  .attr('fill', 'white')
+  .text((d, i) => (d.name + ' - ' + d.height + 'm'))
