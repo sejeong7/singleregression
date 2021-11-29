@@ -86,7 +86,7 @@ labels.enter().append('text')
   .text((d, i) => (d.name + ' - ' + d.height + 'm'))
 
 	// load csv data
-        d3.csv("./Book1.csv", d3.autoType)
+        d3.csv("./single_regression.csv", d3.autoType)
             .then(function(data) {
                 console.log(data);
 
