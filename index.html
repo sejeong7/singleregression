@@ -49,7 +49,6 @@ const svg = d3.select("#main").append("svg")
 const buildings = svg.selectAll('rect').data(data)
 
 function plotBarChart(dataset) {
-	 };
 	
 buildings.enter().append('rect')
   .attr('x', - barWidth / 2)
@@ -84,7 +83,8 @@ labels.enter().append('text')
     return `translate(${xBase + xOffset}px, ${yBase + yOffset}px)`;
   })
   .text((d, i) => (d.name + ' - ' + d.height + 'm'))
-
+};
+	
 	// load csv data
         d3.csv("./single_regression.csv", d3.autoType)
             .then(function(data) {
