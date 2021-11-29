@@ -17,7 +17,6 @@
 <script type="text/javascript">
 
 
-
 const data = [{
     "name": "Burj Khalifa",
     "height": "350"
@@ -79,7 +78,7 @@ const x = d3.scaleBand()
 
 const colourScale = d3.scaleOrdinal(d3.schemeBlues[data.length])
 
-const svg = d3.select("#chart-area").append("svg")
+const svg = d3.select("#main").append("svg")
   .attr("width", containerWidth)
   .attr("height", containerHeight)
 
