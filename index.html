@@ -16,14 +16,14 @@
 	</div>
 <script type="text/javascript">
 
-	
+function plotBarChart(data) {	
 data.forEach((d) => {
-  d.height = Number(d.height)
+  d.single_regression = Number(d.single_regression)
 })
 
-const heightExtent = d3.extent(data, d => d.height)
+const heightExtent = d3.extent(data, d => d.single_regression)
 
-const bars = data.map(d => d.name)
+const bars = data.map(d => d.variable)
 
 const containerWidth = 700
 const containerHeight = 300
@@ -48,7 +48,7 @@ const svg = d3.select("#main").append("svg")
 
 const buildings = svg.selectAll('rect').data(data)
 
-function plotBarChart(dataset) {
+
 	
 buildings.enter().append('rect')
   .attr('x', - barWidth / 2)
@@ -56,15 +56,15 @@ buildings.enter().append('rect')
   .attr('width', barWidth)
   .attr('height', (d, i) => y(d.height))
   .style('transform', (d, i) =>
-    `translate(${containerWidth / 2}px, ${containerHeight / 2}px) rotate(${angle(d.name)}deg)`)
-  .attr('fill', (d, i) => colourScale(d.name))
+    `translate(${containerWidth / 2}px, ${containerHeight / 2}px) rotate(${angle(d.variable)}deg)`)
+  .attr('fill', (d, i) => colourScale(d.category))
 
 const labels = svg.selectAll('text').data(data)
 
 labels.enter().append('text')
   .attr('x', -barWidth / 2)
   .attr('text-anchor', (d, i) => {
-    const degrees = angle(d.name);
+    const degrees = angle(d.variable);
     if(10 <= degrees && degrees <= 170) { return 'end'; }
     if(190 <= degrees && degrees <= 350) { return 'start'; }
     return 'middle';
@@ -73,16 +73,16 @@ labels.enter().append('text')
     const xBase = containerWidth / 2;
     const yBase = containerHeight / 2;
     
-    const degrees = angle(d.name);
+    const degrees = angle(d.variable);
     const radians = (degrees + 90) / 360 * 2 * Math.PI;
-    const barHeight = y(d.height) + 2.5 * barWidth;
+    const barHeight = y(d.single_regression) + 2.5 * barWidth;
 
     const yOffset = Math.sin(radians) * barHeight;
     const xOffset = Math.cos(radians) * barHeight;
 
     return `translate(${xBase + xOffset}px, ${yBase + yOffset}px)`;
   })
-  .text((d, i) => (d.name + ' - ' + d.height + 'm'))
+  .text((d, i) => (d.variable + ' - ' + d.single_regression + 'm'))
 };
 	
 	// load csv data
