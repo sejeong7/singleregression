@@ -16,8 +16,6 @@
 	</div>
 <script type="text/javascript">
 
-function plotBarChart(dataset) {
-	 };
 	
 data.forEach((d) => {
   d.height = Number(d.height)
@@ -50,6 +48,9 @@ const svg = d3.select("#main").append("svg")
 
 const buildings = svg.selectAll('rect').data(data)
 
+function plotBarChart(dataset) {
+	 };
+	
 buildings.enter().append('rect')
   .attr('x', - barWidth / 2)
   .attr('y', barWidth * 2)
