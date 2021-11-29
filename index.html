@@ -16,6 +16,14 @@
 	</div>
 <script type="text/javascript">
 
+	 
+// load csv data
+        d3.csv("./Book1.csv", d3.autoType)
+            .then(function(data) {
+                console.log(data);
+
+                plotBarChart(data);
+            }) 
 
 const data = [{
     "name": "Burj Khalifa",
@@ -119,14 +127,7 @@ labels.enter().append('text')
     return `translate(${xBase + xOffset}px, ${yBase + yOffset}px)`;
   })
   .text((d, i) => (d.name + ' - ' + d.height + 'm'))
- 
-// load csv data
-        d3.csv("./Book1.csv", d3.autoType)
-            .then(function(data) {
-                console.log(data);
 
-                plotBarChart(data);
-            }) 
 </script>
 </body>
 </html>
