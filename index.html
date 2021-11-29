@@ -16,7 +16,9 @@
 	</div>
 <script type="text/javascript">
 
-	 
+function plotBarChart(dataset) {
+	 };
+	
 // load csv data
         d3.csv("./Book1.csv", d3.autoType)
             .then(function(data) {
@@ -24,44 +26,6 @@
 
                 plotBarChart(data);
             }) 
-
-const data = [{
-    "name": "Burj Khalifa",
-    "height": "350"
-  },
-  {
-    "name": "Shanghai Tower",
-    "height": "263.34"
-  },
-  {
-    "name": "Abraj Al-Bait Clock Tower",
-    "height": "254.04"
-  },
-  {
-    "name": "Ping An Finance Centre",
-    "height": "253.20"
-  },
-  {
-    "name": "Lotte World Tower",
-    "height": "230.16"
-  },
-  {
-    "name": "Burj Khalifa 2",
-    "height": "350"
-  },
-  {
-    "name": "Shanghai Tower 2",
-    "height": "263.34"
-  },
-  {
-    "name": "Abraj Al-Bait Clock Tower 2",
-    "height": "254.04"
-  },
-  {
-    "name": "Ping An Finance Centre 2",
-    "height": "253.20"
-  }
-]
 
 data.forEach((d) => {
   d.height = Number(d.height)
