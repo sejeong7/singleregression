@@ -63,16 +63,18 @@ const heightExtent = d3.extent(data, d => d.height)
 
 const bars = data.map(d => d.name)
 
-const containerWidth = 400
-const containerHeight = 800
+const containerWidth = 700
+const containerHeight = 300
+const barWidth = 16
+const radius = Math.min(containerWidth / 2, containerHeight / 2) - barWidth * 4;
 
 const y = d3.scaleLinear()
   .domain([0, heightExtent[1]])
-  .range([0, containerHeight])
+  .range([0, radius])
 
-const x = d3.scaleBand()
+const angle = d3.scaleBand()
   .domain(bars)
-  .range([0, containerWidth])
+  .range([0, 360])
   .paddingInner(0.02)
   .paddingOuter(0)
 
@@ -85,22 +87,37 @@ const svg = d3.select("#main").append("svg")
 const buildings = svg.selectAll('rect').data(data)
 
 buildings.enter().append('rect')
-  .attr('x', (d, i) => x(d.name))
-  .attr('y', (d, i) => {
-    return containerHeight - y(d.height)
-  })
-  .attr('width', x.bandwidth())
+  .attr('x', - barWidth / 2)
+  .attr('y', barWidth * 2)
+  .attr('width', barWidth)
   .attr('height', (d, i) => y(d.height))
+  .style('transform', (d, i) =>
+    `translate(${containerWidth / 2}px, ${containerHeight / 2}px) rotate(${angle(d.name)}deg)`)
   .attr('fill', (d, i) => colourScale(d.name))
 
 const labels = svg.selectAll('text').data(data)
 
 labels.enter().append('text')
-  .attr('text-anchor', 'end')
-  .attr('x', (d, i) => (x(d.name) + (x.bandwidth() / 2)))
-  .attr('y', (d, i) => containerHeight - 10)
-  .attr('writing-mode', 'tb')
-  .attr('fill', 'white')
+  .attr('x', -barWidth / 2)
+  .attr('text-anchor', (d, i) => {
+    const degrees = angle(d.name);
+    if(10 <= degrees && degrees <= 170) { return 'end'; }
+    if(190 <= degrees && degrees <= 350) { return 'start'; }
+    return 'middle';
+  })
+  .style('transform', (d, i) => {
+    const xBase = containerWidth / 2;
+    const yBase = containerHeight / 2;
+    
+    const degrees = angle(d.name);
+    const radians = (degrees + 90) / 360 * 2 * Math.PI;
+    const barHeight = y(d.height) + 2.5 * barWidth;
+
+    const yOffset = Math.sin(radians) * barHeight;
+    const xOffset = Math.cos(radians) * barHeight;
+
+    return `translate(${xBase + xOffset}px, ${yBase + yOffset}px)`;
+  })
   .text((d, i) => (d.name + ' - ' + d.height + 'm'))
  
 </script>
