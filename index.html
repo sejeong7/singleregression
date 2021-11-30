@@ -54,7 +54,7 @@ buildings.enter().append('rect')
   .attr('x', - barWidth / 2)
   .attr('y', barWidth * 2)
   .attr('width', barWidth)
-  .attr('height', (d, i) => y(d.height))
+  .attr('height', (d, i) => y(d.single_regression))
   .style('transform', (d, i) =>
     `translate(${containerWidth / 2}px, ${containerHeight / 2}px) rotate(${angle(d.variable)}deg)`)
   .attr('fill', (d, i) => colourScale(d.category))
